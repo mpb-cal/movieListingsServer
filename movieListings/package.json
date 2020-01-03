@@ -1,0 +1,38 @@
+{
+  "name": "movielistings",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pulls movie showtimes from theater web pages and saves them in a file.",
+  "author": "Marc Bernasconi",
+  "main": "getListings.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node getListings.js",
+    "test": "./eslint getListings.js"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "commander": "^2.11.0",
+    "csv": "^1.1.1",
+    "csv-string": "^2.3.2",
+    "jest": "^21.2.1",
+    "jquery": "^3.2.1",
+    "jsdom": "^11.2.0",
+    "mocha": "^3.5.3",
+    "moment": "^2.18.1",
+    "pad": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.2",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "theaterData/*"
+    ]
+  }
+}
