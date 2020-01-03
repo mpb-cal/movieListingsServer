@@ -1,4 +1,6 @@
-# movieListingsServer
+# Movie Listings Server
+
+Reads web pages of local movies theaters nightly. Extracts showtimes from HTML, stores data in JSON and CSV files which are served by a node/express server.
 
 Developed with:
 
@@ -18,5 +20,4 @@ yarn start
 
 http://localhost:5500
 
-Nightly, reads web pages of local movies theaters. Extracts showtimes from HTML, stores data in JSON and CSV files which are served by a node/express server.
 
