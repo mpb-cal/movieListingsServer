@@ -1,0 +1,14 @@
+
+body {
+  font-size: 14px;
+}
+
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+	padding: .2rem .4rem;
+}
+
+table.listings tbody tr {
+  display: none;
+}
+
+
