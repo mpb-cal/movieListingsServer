@@ -20,4 +20,13 @@ yarn start
 
 http://localhost:5500
 
+Nightly:
+
+cd getListings
+
+mkdir theaterPages theaterData
+
+yarn start
+
+
 
