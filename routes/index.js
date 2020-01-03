@@ -28,11 +28,9 @@ router.get('/', function(req, res) {
   availableDates = _.uniq( availableDates )
   availableDates = availableDates.sort()
   // remove dates before today
-/*
   availableDates = availableDates.filter(
     date => new Date( moment( date ).format() ).valueOf() >= new Date( movieDate ).valueOf()
   )
-*/
 
   //movieData = movieData.filter( e => e[0] == movieDate )
 

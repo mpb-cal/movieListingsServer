@@ -4,7 +4,9 @@ Developed with:
 
 express.js for back end server
 
-underscore.js
+underscore.js and async.js for general utilities
+
+jsdom and jquery for screen scraping
 
 moment.js for working with dates
 
@@ -15,3 +17,6 @@ To run:
 yarn start
 
 http://localhost:5500
+
+Nightly, reads web pages of local movies theaters. Extracts showtimes from HTML, stores data in JSON and CSV files which are served by a node/express server.
+

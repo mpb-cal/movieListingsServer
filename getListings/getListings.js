@@ -1,9 +1,5 @@
 'use strict';
 
-/*
- * -r remove cache and redownload theater pages
-*/
-
 (function () {
   const path = require( 'path' )
   const fs = require( 'fs' )
@@ -64,42 +60,42 @@
     },
     {
       title: 'Elmwood',
-      url: 'http://www.rialtocinemas.com/index.php?location=elmwood',
+      url: 'https://www.rialtocinemas.com/index.php?location=elmwood',
       filename: `${HTML_DIR}/elmwood.htm`,
       type: TYPE_RIALTO
     },
     {
       title: 'Cerrito',
-      url: 'http://www.rialtocinemas.com/index.php?location=cerrito',
+      url: 'https://www.rialtocinemas.com/index.php?location=cerrito',
       filename: `${HTML_DIR}/cerrito.htm`,
       type: TYPE_RIALTO
     },
     {
-      title: 'UA Berkeley',
-      url: 'https://www.regmovies.com/theaters/ua-berkeley-7/C00893890201',
+      title: 'UA Berkeley', // need to download manually
+      url: 'https://www.regmovies.com/theatres/regal-ua-berkeley/1172',
       filename: `${HTML_DIR}/ua-berkeley.htm`,
       type: TYPE_UA
     },
     {
-      title: 'BAM/PFA',
+      title: 'BAM/PFA', // broken
       url: 'https://bampfa.org/visit/calendar',
       filename: `${HTML_DIR}/pfa.htm`,
       type: TYPE_PFA
     },
     {
-      title: 'New Parkway',
+      title: 'New Parkway', // broken
       url: 'http://www.thenewparkway.com/',
       filename: `${HTML_DIR}/parkway.htm`,
       type: TYPE_PARKWAY
     },
     {
       title: 'Roxie',
-      url: 'http://www.roxie.com/calendar/',
+      url: 'https://www.roxie.com/calendar/',
       filename: `${HTML_DIR}/roxie.htm`,
       type: TYPE_ROXIE
     },
     {
-      title: 'Castro',
+      title: 'Castro',  // broken
       url: 'http://www.castrotheatre.com/p-list.html',
       filename: `${HTML_DIR}/castro.htm`,
       type: TYPE_CASTRO
@@ -109,16 +105,15 @@
   const TODAY = moment().format().slice( 0, 10 )
   console.error( TODAY )
 
-  let theaterData = []
-  theaterData.push( HEADINGS )
+  let theaterData = [HEADINGS];
 
   async.each( THEATERS, getTheaterData, (err) => {
     if (err) {
       console.error( 'error: ' + err )
     } else {
       console.error( 'Success' )
-      fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ) )
-      fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ) )
+      fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ), () => {} )
+      fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ), () => {} )
     }
   } )
 
@@ -154,8 +149,8 @@
           return callback( err )
         }
 
-        console.error( `read file ${theater.filename}` )
-        Array.prototype.push.apply( theaterData, processTheaterHTML( html ) )
+        console.error( `reading HTML file ${theater.filename}` )
+        theaterData = [...theaterData, ...processTheaterHTML( html )];
         callback()
       })
     }
@@ -174,8 +169,10 @@
       function addResult( showDate, title, trailerLink, synopsis, times )
       {
         times.forEach( (v,i,a) => {
-          a[i] = a[i].replace( /[^0-9:]/g, '' )
-          a[i].toUpperCase()
+          if (a[i]) {
+            a[i] = a[i].replace( /[^0-9:]/g, '' )
+            a[i].toUpperCase()
+          }
         } )
 
         times = times.filter( e => e )
@@ -201,7 +198,8 @@
             }
           })
 
-          $(`.filmItemTimes`, e).each( (i,e) => {
+          //$(`.filmItemTimes`, e).each( (i,e) => {
+          $(`.accordion-item`, e).each( (i,e) => {
             showDate = $(e).attr( 'data-film-session' )
             let times = []
             $('.filmTimeItem', e).each( (i,e) => {
@@ -221,11 +219,11 @@
           }
         })
       } else if (theater.type == TYPE_UA) {
-        $('.showtime-panel').each( (i,e) => {
-          title = $('.info-cell .title', e).text().trim()
+        $('.movie-row').each( (i,e) => {
+          title = $('.qb-movie-name', e).text().trim();
 
           let times = []
-          $('.showtime-entry .btn', e).each( (i,e) => {
+          $('.qb-movie-info-column a.btn', e).each( (i,e) => {
             times.push( $(e).text() )
           })
 
@@ -245,12 +243,12 @@
           addResult( showDate, title, trailerLink, synopsis, times )
         })
       } else if (theater.type == TYPE_PARKWAY) {
-        $('.eventDay').each( (i,e) => {
-          showDate = new Date( $('.date a', e).text() ).toISOString().slice( 0, 10 )
+        showDate = new Date( $('#tribe-events-header').attr('data-date') ).toISOString().slice( 0, 10 )
 
-          $('.event', e).each( (i,e) => {
-            const time = $('.startTime', e).text()
-            title = $('.summary', e).text().trim()
+        $('#tribe-events-day').each( (i,e) => {
+          $('.type-tribe_events', e).each( (i,e) => {
+            const time = $('.time-details', e).text()
+            title = $('.tribe-events-list-event-title', e).text().trim()
             const m = title.match( /(.*)\(purchase tickets online\)/i )
             if (m) {
               title = m[1].trim()
@@ -265,12 +263,15 @@
           let times = []
           const day = pad( 2, $('.ai1ec-date', e).text(), '0' )
           showDate = TODAY.replace( /-\d+$/, '-' + day )
-          $('table.roxie-showtimes-table tr', e).each( (i,e) => {
+
+          $('table.roxie-showtimes-table tr:even', e).each( (i,e) => {
             title = $('a', e).text().trim()
             if (title) {
               titles.push( title )
             }
+          })
 
+          $('table.roxie-showtimes-table tr:odd', e).each( (i,e) => {
             let time = $('.now-playing-times-month', e).text().trim()
             time = time.replace( /[^ -~]/g, '' )
             time = time.replace( /pm/, ' pm' )
