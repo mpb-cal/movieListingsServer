@@ -14,7 +14,7 @@ moment.js for working with dates
 
 PUG template language
  
-To run:
+To run the server:
 
 yarn start
 
