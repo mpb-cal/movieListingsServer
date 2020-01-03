@@ -1,7 +1,7 @@
 const moment = require( 'moment' )
 const _ = require( 'underscore' )
 
-const LISTINGS_FILE = __dirname + '/../../movieListings/theaterData/listings.json'
+const LISTINGS_FILE = __dirname + '/../getListings/theaterData/listings.json'
 
 var fs = require( 'fs' )
 var express = require('express')
@@ -28,9 +28,11 @@ router.get('/', function(req, res) {
   availableDates = _.uniq( availableDates )
   availableDates = availableDates.sort()
   // remove dates before today
+/*
   availableDates = availableDates.filter(
     date => new Date( moment( date ).format() ).valueOf() >= new Date( movieDate ).valueOf()
   )
+*/
 
   //movieData = movieData.filter( e => e[0] == movieDate )
 
