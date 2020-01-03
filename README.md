@@ -1,6 +1,6 @@
 # Movie Listings Server
 
-Reads web pages of local movies theaters nightly. Extracts showtimes from HTML, stores data in JSON and CSV files which are served by a node/express server.
+Reads web pages of local movies theaters nightly. Extracts showtimes from HTML, stores data in JSON and CSV files which are served by a node/express server. I made this because google took away google movies, which was simple and good, and I don't want to have to open 10 or more tabs to see what movies are playing.
 
 Developed with:
 - express.js for back end server
