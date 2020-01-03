@@ -11,7 +11,7 @@ Developed with:
 
 To run the server:
 1. `yarn start`
-2. browse to `http://localhost:5500`
+2. browse to http://localhost:5500
 
 Nightly:
 1. `cd getListings`
