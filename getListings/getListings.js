@@ -1,9 +1,5 @@
 'use strict';
 
-/*
- * -r remove cache and redownload theater pages
-*/
-
 (function () {
   const path = require( 'path' )
   const fs = require( 'fs' )
@@ -64,19 +60,19 @@
     },
     {
       title: 'Elmwood',
-      url: 'http://www.rialtocinemas.com/index.php?location=elmwood',
+      url: 'https://www.rialtocinemas.com/index.php?location=elmwood',
       filename: `${HTML_DIR}/elmwood.htm`,
       type: TYPE_RIALTO
     },
     {
       title: 'Cerrito',
-      url: 'http://www.rialtocinemas.com/index.php?location=cerrito',
+      url: 'https://www.rialtocinemas.com/index.php?location=cerrito',
       filename: `${HTML_DIR}/cerrito.htm`,
       type: TYPE_RIALTO
     },
     {
       title: 'UA Berkeley',
-      url: 'https://www.regmovies.com/theaters/ua-berkeley-7/C00893890201',
+      url: 'https://www.regmovies.com/theatres/regal-ua-berkeley/1172',
       filename: `${HTML_DIR}/ua-berkeley.htm`,
       type: TYPE_UA
     },
@@ -94,7 +90,7 @@
     },
     {
       title: 'Roxie',
-      url: 'http://www.roxie.com/calendar/',
+      url: 'https://www.roxie.com/calendar/',
       filename: `${HTML_DIR}/roxie.htm`,
       type: TYPE_ROXIE
     },
@@ -117,8 +113,8 @@
       console.error( 'error: ' + err )
     } else {
       console.error( 'Success' )
-      fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ) )
-      fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ) )
+      fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ), () => {} )
+      fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ), () => {} )
     }
   } )
 
@@ -174,8 +170,10 @@
       function addResult( showDate, title, trailerLink, synopsis, times )
       {
         times.forEach( (v,i,a) => {
-          a[i] = a[i].replace( /[^0-9:]/g, '' )
-          a[i].toUpperCase()
+          if (a[i]) {
+            a[i] = a[i].replace( /[^0-9:]/g, '' )
+            a[i].toUpperCase()
+          }
         } )
 
         times = times.filter( e => e )
