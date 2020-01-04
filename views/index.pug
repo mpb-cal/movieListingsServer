@@ -7,31 +7,12 @@ block content
     .row
       .col-sm-12
         h1 East Bay Movie Listings
-        if $flashError
-          .flashError.bg-danger
-            ul
-              each error in $flashError
-                li= error
-        if $flashInfo
-          .flashInfo.bg-info
-            ul
-              each info in $flashInfo
-                li= info
         form.form-inline( method='post' )
           div.form-group
             label( for='movieDate' ) Select A Date: 
             select.form-control( name='movieDate' id='movieDate' )
               each date in $availableDates
                 option= date
-        //ul.nav.nav-pills
-          //each date in $availableDates
-            //li
-              //a( href='' class='chooseDate' data-date=date ) #{date}
-        //-form( method='post' )
-          //-div.form-group
-            //-label( for='movieDate' ) Enter A Date:
-            //-input.form-control( name='movieDate' id='movieDate' )
-          //-input.btn.btn-default( type='submit' value='Submit' )
         h2 Showtimes for 
           span.selectedDate
           | :
