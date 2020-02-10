@@ -107,17 +107,9 @@
 
   let theaterData = [HEADINGS];
 
-  async.each( THEATERS, getTheaterData, (err) => {
-    if (err) {
-      console.error( 'error: ' + err )
-    } else {
-      console.error( 'Success' )
-      fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ), () => {} )
-      fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ), () => {} )
-    }
-  } )
-
-
+  async.each(THEATERS, getTheaterData, (err) => console.error( 'error: ' + err ));
+  
+  // callback must be called with an error
   function getTheaterData( theater, callback )
   {
     if (!fs.existsSync( theater.filename ) || program.forceNewData) {
@@ -151,7 +143,8 @@
 
         console.error( `reading HTML file ${theater.filename}` )
         theaterData = [...theaterData, ...processTheaterHTML( html )];
-        callback()
+        fs.writeFile( LISTINGS_JSON, JSON.stringify( theaterData ), () => {} )
+        fs.writeFile( LISTINGS_CSV, csv.stringify( theaterData ), () => {} )
       })
     }
 
