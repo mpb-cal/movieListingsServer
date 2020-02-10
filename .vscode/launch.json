@@ -6,13 +6,23 @@
     "configurations": [
         {
             "type": "node",
+            "runtimeExecutable": "/Users/yh15331/.nvm/versions/node/v10.16.0/bin/node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Web Server",
+            "program": "${workspaceFolder}/bin/www",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "node",
+            "runtimeExecutable": "/Users/yh15331/.nvm/versions/node/v10.16.0/bin/node",
+            "request": "launch",
+            "name": "Get Listings",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/getListings/getListings.js",
-            "runtimeExecutable": "/Users/yh15331/.nvm/versions/node/v10.16.0/bin/node",
             "cwd": "${workspaceFolder}/getListings"
         }
     ]
