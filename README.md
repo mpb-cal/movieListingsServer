@@ -10,13 +10,13 @@ Developed with:
 - PUG template language
 
 To run the server:
-1. `yarn start`
+1. `npm start`
 2. browse to http://localhost:5500
 
 Nightly:
 1. `cd getListings`
 2. `mkdir theaterPages theaterData`
-3. `yarn start`
+3. `npm start`
 
 
 
