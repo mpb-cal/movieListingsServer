@@ -5,8 +5,8 @@ module.exports = {
     "es6": true
   },
   "rules": {
-    "space-in-parens": "off",
-    "semi": [2, "never"],
+    "space-in-parens": ["error", "never"],
+    "semi": ["error", "always"],
     "no-unexpected-multiline": 2,
     "no-console": "off"
   }
