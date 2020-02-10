@@ -18,6 +18,5 @@ Nightly:
 2. `mkdir theaterPages theaterData`
 3. `npm start`
 
-one change
 
 
