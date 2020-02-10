@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "node getListings.js",
-    "test": "./eslint getListings.js"
+    "test": "eslint getListings.js"
   },
   "dependencies": {
     "async": "^2.5.0",

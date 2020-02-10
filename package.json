@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "test": "./eslint .",
+    "test": "eslint .",
     "prod:start": "NODE_ENV=production pm2 start ./bin/www && pm2 logs",
     "prod:stop": "pm2 delete www"
   },
