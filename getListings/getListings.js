@@ -17,6 +17,10 @@ program
   .option('-f, --force-new-data', 'Ignore cache and download new theater data')
   .parse(process.argv);
 
+if (!program.forceNewData) {
+  console.log('Run with -f to ignore cache and download new theater data');
+}
+
 const HTML_DIR = path.join(__dirname, 'theaterPages');
 const LISTINGS_DIR = path.join(__dirname, 'theaterData');
 const LISTINGS_JSON = path.join(LISTINGS_DIR, 'listings.json');
@@ -102,21 +106,35 @@ const THEATERS = [
 ];
 
 const TODAY = moment().format().slice(0, 10);
-console.error(TODAY);
 
 let theaterData = [HEADINGS];
 
-async.each(THEATERS, getTheaterData, (err) => console.error('error: ' + err));
+async.waterfall([
+    () => async.each(THEATERS, getTheaterData, (err) => console.error('error: ' + err))
+  ],
+  (err) => {
+    if (err) {
+      console.error('error: ' + err);
+    } else {
+      console.log(`Writing JSON file ${LISTINGS_JSON}`);
+      fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData), () => {});
+      console.log(`Writing CSV file ${LISTINGS_CSV}`);
+      fs.writeFile(LISTINGS_CSV, csv.stringify(theaterData), () => {});
+    }
+  }
+);
 
 // callback must be called with an error
 function getTheaterData(theater, callback)
 {
+  console.log('getTheaterData: ' + theater.title);
+
   if (!fs.existsSync(theater.filename) || program.forceNewData) {
-    console.error(`${theater.url}: requesting`);
+    console.log(`Requesting ${theater.url}`);
 
     let h = (theater.url.match(/^https/) ? https : http);
     h.get(theater.url, function(res) {
-      console.error(`${theater.url}: receiving`);
+      console.log(`Receiving ${theater.url}`);
 
       if (res.statusCode != 200) {
         res.resume();
@@ -126,6 +144,7 @@ function getTheaterData(theater, callback)
       // write the page to a file
       // res is a http.IncomingMessage -> ReadableStream
       // readable.pipe( writeable )
+      console.log(`Writing HTML file ${theater.filename}`);
       res.pipe(fs.createWriteStream(theater.filename));
       res.on('end', processTheaterFile);
     });
@@ -135,15 +154,14 @@ function getTheaterData(theater, callback)
 
   function processTheaterFile()
   {
+    console.log(`Reading HTML file ${theater.filename}`);
+
     fs.readFile(theater.filename, 'utf8', (err, html) => {
       if (err) {
         return callback(err);
       }
 
-      console.error(`reading HTML file ${theater.filename}`);
       theaterData = [...theaterData, ...processTheaterHTML(html)];
-      fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData), () => {});
-      fs.writeFile(LISTINGS_CSV, csv.stringify(theaterData), () => {});
     });
   }
 
