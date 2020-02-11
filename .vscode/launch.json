@@ -6,7 +6,6 @@
     "configurations": [
         {
             "type": "node",
-            "runtimeExecutable": "/Users/yh15331/.nvm/versions/node/v10.16.0/bin/node",
             "request": "launch",
             "name": "Launch Web Server",
             "program": "${workspaceFolder}/bin/www",
@@ -16,7 +15,6 @@
         },
         {
             "type": "node",
-            "runtimeExecutable": "/Users/yh15331/.nvm/versions/node/v10.16.0/bin/node",
             "request": "launch",
             "name": "Get Listings",
             "skipFiles": [
