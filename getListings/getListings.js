@@ -74,31 +74,31 @@ const THEATERS = [
     type: TYPE_RIALTO
   },
   {
-    title: 'UA Berkeley', // need to download manually
+    title: 'UA Berkeley',
     url: 'https://www.regmovies.com/theatres/regal-ua-berkeley/1172',
     filename: `${HTML_DIR}/ua-berkeley.htm`,
     type: TYPE_UA
   },
   {
-    title: 'BAM/PFA', // broken
+    title: 'BAM/PFA',
     url: 'https://bampfa.org/visit/calendar',
     filename: `${HTML_DIR}/pfa.htm`,
     type: TYPE_PFA
   },
-  {
-    title: 'New Parkway', // broken
-    url: 'http://www.thenewparkway.com/',
+/*  {
+    title: 'New Parkway',
+    url: 'https://www.thenewparkway.com/',
     filename: `${HTML_DIR}/parkway.htm`,
     type: TYPE_PARKWAY
   },
-  {
+*/  {
     title: 'Roxie',
     url: 'https://www.roxie.com/calendar/',
     filename: `${HTML_DIR}/roxie.htm`,
     type: TYPE_ROXIE
   },
   {
-    title: 'Castro',  // broken
+    title: 'Castro',
     url: 'http://www.castrotheatre.com/p-list.html',
     filename: `${HTML_DIR}/castro.htm`,
     type: TYPE_CASTRO
@@ -109,22 +109,17 @@ const TODAY = moment().format().slice(0, 10);
 
 let theaterData = [HEADINGS];
 
-async.waterfall([
-    () => async.each(THEATERS, getTheaterData, (err) => console.error('error: ' + err))
-  ],
-  (err) => {
-    if (err) {
-      console.error('error: ' + err);
-    } else {
-      console.log(`Writing JSON file ${LISTINGS_JSON}`);
-      fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData), () => {});
-      console.log(`Writing CSV file ${LISTINGS_CSV}`);
-      fs.writeFile(LISTINGS_CSV, csv.stringify(theaterData), () => {});
-    }
+async.each(THEATERS, getTheaterData, (err) => {
+  if (err) {
+    console.error('error: ' + err);
+  } else {
+    console.log(`Writing JSON file ${LISTINGS_JSON}`);
+    fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData), () => {});
+    console.log(`Writing CSV file ${LISTINGS_CSV}`);
+    fs.writeFile(LISTINGS_CSV, csv.stringify(theaterData), () => {});
   }
-);
+});
 
-// callback must be called with an error
 function getTheaterData(theater, callback)
 {
   console.log('getTheaterData: ' + theater.title);
@@ -162,6 +157,7 @@ function getTheaterData(theater, callback)
       }
 
       theaterData = [...theaterData, ...processTheaterHTML(html)];
+      callback();
     });
   }
 
