@@ -8,14 +8,13 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "node getListings.js",
-    "test": "eslint getListings.js"
+    "test": "jest"
   },
   "dependencies": {
     "async": "^2.5.0",
     "commander": "^2.11.0",
     "csv": "^1.1.1",
     "csv-string": "^2.3.2",
-    "jest": "^21.2.1",
     "jquery": "^3.2.1",
     "jsdom": "^11.2.0",
     "mocha": "^3.5.3",
@@ -28,7 +27,8 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^21.2.1"
   },
   "nodemonConfig": {
     "ignore": [
