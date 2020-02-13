@@ -1,6 +1,6 @@
-const getTheateData = require('./getListings');
+const theater = require('theater');
 
 test('', () => {
-  expect(getTheaterData(theater, callback)).toBe();
+  expect(theater.getTheaterData(theater, callback)).toBe();
 });
 
