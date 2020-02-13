@@ -1,6 +1,6 @@
-import {getTheaterData, THEATER_TYPES} from './theaterFunctions.js';
+const theater = require('theater');
 
 test('', () => {
-  expect(getTheaterData(theater, callback)).toBe();
+  expect(theater.getTheaterData(theater, callback)).toBe();
 });
 
