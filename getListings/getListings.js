@@ -20,6 +20,16 @@ if (!program.forceNewData) {
   console.log('Run with -f to ignore cache and download new theater data');
 }
 
+const THEATER_TYPES = {
+  LANDMARK: 1,
+  UA: 2,
+  RIALTO: 3,
+  PFA: 4,
+  PARKWAY: 5,
+  ROXIE: 6,
+  CASTRO: 7,
+};
+
 const HTML_DIR = path.join(__dirname, 'theaterPages');
 const LISTINGS_DIR = path.join(__dirname, 'theaterData');
 const LISTINGS_JSON = path.join(LISTINGS_DIR, 'listings.json');
@@ -109,16 +119,6 @@ async.each(THEATERS, (item, callback) => getTheaterData(item, program.forceNewDa
   }
 });
 
-const THEATER_TYPES = {
-  LANDMARK: 1,
-  UA: 2,
-  RIALTO: 3,
-  PFA: 4,
-  PARKWAY: 5,
-  ROXIE: 6,
-  CASTRO: 7,
-};
-
 function getTheaterData(theater, forceDownload, callback) {
   console.log('getTheaterData: ' + theater.title);
 
@@ -139,7 +139,7 @@ function getTheaterData(theater, forceDownload, callback) {
       // readable.pipe( writeable )
       console.log(`Writing HTML file ${theater.filename}`);
       res.pipe(fs.createWriteStream(theater.filename));
-      res.on('end', processTheaterFile(theater, callback));
+      res.on('end', () => processTheaterFile(theater, callback));
     });
   } else {
     processTheaterFile(theater, callback);
@@ -186,7 +186,7 @@ function processTheaterHTML(html, theater) {
     const rtLink = `<a href='${href}' target=_blank>Reviews</a>`;
 
     if (times.length) {
-      console.log([showDate, title.toUpperCase(), theaterLink, trailerLink, rtLink, synopsis, times]);
+      //console.log([showDate, title.toUpperCase(), theaterLink, trailerLink, rtLink, synopsis, times]);
       return [showDate, title.toUpperCase(), theaterLink, trailerLink, rtLink, synopsis, times];
     }
   }
