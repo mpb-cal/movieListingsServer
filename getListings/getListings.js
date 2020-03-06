@@ -292,7 +292,7 @@ function processTheaterHTML(html, theater) {
       });
 
       titles.forEach((v,i) => {
-        let result = addResult(showDate, title, trailerLink, synopsis, [times[i]]);
+        let result = addResult(showDate, v, trailerLink, synopsis, [times[i]]);
         result && results.push(result);
       });
     });
