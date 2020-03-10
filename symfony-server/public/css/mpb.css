@@ -1,0 +1,49 @@
+
+@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
+
+.center-text {
+	text-align: center;
+}
+
+body {
+	font-family: "Roboto Condensed", "Helvetica", "Arial", sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	color: #555;
+}
+
+.header {
+	color: white;
+	background-image: url("/img/nightSky.jpg");
+	background-position: top;
+	background-size: cover;
+	padding: 12vw 2em;
+	text-align: center;
+}
+
+#mainContent {
+	/* 100vh - footer height - footer margin - body padding */
+	min-height: calc(100vh - 4em - 1em - 50px);
+}
+
+footer {
+	border-top: 1px solid #CCC;
+	padding: 1em 0;
+	margin: 1em 0 0 0;
+	height: 4em;
+}
+
+.galleryRows div {
+	margin-bottom: 3rem;
+}
+
+textarea#lily_sourceText {
+  height: 64rem;
+  font-family: monospace;
+}
+
+img.score {
+  border: 1px dashed black;
+}
+
+
