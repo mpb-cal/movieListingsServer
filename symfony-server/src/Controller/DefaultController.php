@@ -18,11 +18,14 @@ class DefaultController extends AbstractController {
   public function index(Request $request, SessionInterface $session) {
 
     $movieDate = date('Y-m-d');
-    //$movieDate = moment().format().slice(0, 10);
 
     $text = file_get_contents(LISTINGS_FILE);
     $movieData = json_decode($text);
+
+    // drop first (header) line
     array_shift($movieData);
+
+    // convert array of dates to comma separated string:
     foreach ($movieData as &$row) {
       $row[6] = implode(', ', $row[6]);
     }
@@ -45,17 +48,6 @@ class DefaultController extends AbstractController {
     return new Response(
       $contents
     );
-
-/*
-    return $this->render(
-      'index.html.twig',
-      [
-        'availableDates' => $availableDates,
-        'movieDate' => $movieDate,
-        'movieData' => $movieData,
-      ]
-    );
-*/
   }
 }
 

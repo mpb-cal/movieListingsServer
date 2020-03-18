@@ -2,9 +2,9 @@
 
 namespace WebSight;
 
-require_once 'WebSight/WebPage.php';
+require_once __DIR__ . '/../vendor/mpb-cal/web-sight/WebPage.php';
 
-define('HEADS', [ 'Date', 'Title', 'Theater', '', '', 'Synopsis', 'Times' ]);
+define('HEADS', ['Date', 'Title', 'Theater', '', '', 'Synopsis', 'Times']);
 
 $mainContent =
   div( "class='container-fluid'",
@@ -39,7 +39,7 @@ $mainContent =
               $movieData, 
               function($c, $row) {
                 return $c . tr('', array_reduce(
-                  $row, 
+                  $row,
                   function($c, $cell) {
                     return $c . td('', $cell);
                   }
