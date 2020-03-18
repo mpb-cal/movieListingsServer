@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  {% set HEADS = [ 'Date', 'Title', 'Theater', '', '', 'Synopsis', 'Times' ] %}
+
+  <div class=container-fluid>
+    <div class=row>
+      <div class=col-sm-12>
+        <h1>East Bay Movie Listings</h1>
+        <form class=form-inline method='post'>
+          <div class=form-group>
+            <label for='movieDate'>Select A Date:</label>
+            <select class=form-control name='movieDate' id='movieDate'>
+              {% for date in availableDates %}
+                <option>{{ date }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </form>
+        <h2>Showtimes for 
+          <span class=selectedDate></span>:
+        </h2>
+        <table class="table table-bordered compact table-condensed order-column websightDatatable listings">
+          <thead>
+            <tr>
+              {% for i in HEADS %}
+                <th>{{ i }}
+              {% endfor %}
+          </thead>
+          <tfoot>
+            <tr>
+              {% for i in HEADS %}
+                <th>{{ i }}
+              {% endfor %}
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for row in movieData %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ cell|raw }}
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
