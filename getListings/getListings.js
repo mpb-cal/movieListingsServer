@@ -34,6 +34,7 @@ const HTML_DIR = path.join(__dirname, 'theaterPages');
 const LISTINGS_DIR = path.join(__dirname, 'theaterData');
 const LISTINGS_JSON = path.join(LISTINGS_DIR, 'listings.json');
 const LISTINGS_CSV = path.join(LISTINGS_DIR, 'listings.csv');
+const THEATERS_JSON = path.join(LISTINGS_DIR, 'theaters.json');
 
 const HEADINGS = [ 'Date', 'Title', 'Theater', 'Trailer', 'Reviews', 'Synopsis', 'Times' ];
 
@@ -106,6 +107,20 @@ const THEATERS = [
   }
 ];
 
+// write a file with basic theater data
+let theaterInfo = [];
+THEATERS.forEach((e, i, a) => {
+  theaterInfo.push(
+    {
+      name: e.title,
+      url: e.url,
+    }
+  );
+});
+console.log(`Writing JSON file ${THEATERS_JSON}`);
+fs.writeFile(THEATERS_JSON, JSON.stringify(theaterInfo, null, 1), () => {});
+
+
 let theaterData = [HEADINGS];
 
 async.each(THEATERS, (item, callback) => getTheaterData(item, program.forceNewData, callback), (err) => {
@@ -113,7 +128,7 @@ async.each(THEATERS, (item, callback) => getTheaterData(item, program.forceNewDa
     console.error('error: ' + err);
   } else {
     console.log(`Writing JSON file ${LISTINGS_JSON}`);
-    fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData), () => {});
+    fs.writeFile(LISTINGS_JSON, JSON.stringify(theaterData, null, 1), () => {});
     console.log(`Writing CSV file ${LISTINGS_CSV}`);
     fs.writeFile(LISTINGS_CSV, csv.stringify(theaterData), () => {});
   }
