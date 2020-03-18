@@ -11,9 +11,10 @@ $mainContent =
     div( "class=row",
       div( "class=col-sm-12",
         h1( '', 'East Bay Movie Listings' )
+        . h2( '', '(note: most theaters are currently closed due to COVID-19)' )
         . form( "class=form-inline method='post'",
           div( 'class=form-group',
-            label( "for='movieDate'", "Select A Date:" )
+            label( "for='movieDate'", "Select A Date: " )
             . select( "class=form-control name='movieDate' id='movieDate'",
               array_reduce($availableDates, function($c, $i) {return $c . option('', $i); })
             )
