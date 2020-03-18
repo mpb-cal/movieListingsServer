@@ -9,9 +9,16 @@ Developed with:
 - moment.js for working with dates
 - PUG template language
 
+Alternate PHP backend developed with:
+- Symfony 5.0
+
 To run the server:
 1. `npm start`
 2. browse to http://localhost:5500
+
+To run the symfony server:
+1. Run `composer install` in symfony-server/
+2. Link apache to symfony-server/public/
 
 Nightly:
 1. `cd getListings`
