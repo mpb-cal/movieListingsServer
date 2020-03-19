@@ -12,11 +12,21 @@ $mainContent =
       div( "class=col-sm-12",
         h1( '', 'East Bay Movie Listings' )
         . h2( '', '(note: most theaters are currently closed due to COVID-19)' )
+        . h3( '', 'Theaters listed here are:' )
+        . ul( '',
+          array_reduce(
+            $t_theaters, 
+            function($c, $i) {return $c . li(
+              '',
+              a("href='$i->url' target='_blank'", $i->name)
+            ); }
+          )
+        )
         . form( "class=form-inline method='post'",
           div( 'class=form-group',
-            label( "for='movieDate'", "Select A Date: " )
+            label( "for='movieDate'", "Select A Date:&nbsp;" )
             . select( "class=form-control name='movieDate' id='movieDate'",
-              array_reduce($availableDates, function($c, $i) {return $c . option('', $i); })
+              array_reduce($t_availableDates, function($c, $i) {return $c . option('', $i); })
             )
           )
         )
@@ -37,7 +47,7 @@ $mainContent =
           )
           . tbody( '',
             array_reduce(
-              $movieData, 
+              $t_movieData, 
               function($c, $row) {
                 return $c . tr('', array_reduce(
                   $row,
